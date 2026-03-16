@@ -1,0 +1,895 @@
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-cyan: #00ffea;
+      --neon-orange: #ff6b00;
+      --dark-bg: #020a12;
+      --mid-bg: #050f1a;
+      --card-bg: rgba(0, 20, 40, 0.85);
+      --border-glow: rgba(0, 212, 255, 0.4);
+      --text-primary: #e8f4f8;
+      --text-dim: #5a8a9f;
+      --grid-color: rgba(0, 180, 220, 0.06);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* Animated grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 0;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 40px 40px;
+      }
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.15) 2px,
+          rgba(0, 0, 0, 0.15) 4px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Background video */
+    #bg-video {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      object-fit: cover;
+      opacity: 0.5; /* Optional: Tone down the video so it doesn't overpower the text. Adjust as needed. */
+    }
+
+    .page {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ========== LANDING PAGE ========== */
+    #landing {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Corner decorations */
+    .corner-tl,
+    .corner-tr,
+    .corner-bl,
+    .corner-br {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      z-index: 20;
+    }
+
+    .corner-tl {
+      top: 20px;
+      left: 20px;
+      border-top: 2px solid var(--neon-blue);
+      border-left: 2px solid var(--neon-blue);
+    }
+
+    .corner-tr {
+      top: 20px;
+      right: 20px;
+      border-top: 2px solid var(--neon-blue);
+      border-right: 2px solid var(--neon-blue);
+    }
+
+    .corner-bl {
+      bottom: 20px;
+      left: 20px;
+      border-bottom: 2px solid var(--neon-blue);
+      border-left: 2px solid var(--neon-blue);
+    }
+
+    .corner-br {
+      bottom: 20px;
+      right: 20px;
+      border-bottom: 2px solid var(--neon-blue);
+      border-right: 2px solid var(--neon-blue);
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      animation: float-particle linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float-particle {
+      0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+      }
+
+      10% {
+        opacity: 0.8;
+      }
+
+      90% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-10vh) translateX(var(--drift));
+      }
+    }
+
+    /* Logo area */
+    .logo-wrapper {
+      position: relative;
+      margin-bottom: 40px;
+      animation: logo-appear 1s ease forwards;
+    }
+
+    @keyframes logo-appear {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .logo-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+    }
+
+    .logo-img {
+      width: min(250px, 60vw);
+      height: auto;
+      position: relative;
+      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5)) drop-shadow(0 0 40px rgba(0, 212, 255, 0.2));
+      display: block;
+    }
+
+    /* Event badge */
+    .event-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      animation: badge-appear 1s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    @keyframes badge-appear {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .badge-line {
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--neon-cyan));
+    }
+
+    .badge-line.right {
+      background: linear-gradient(90deg, var(--neon-cyan), transparent);
+    }
+
+    .badge-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--neon-cyan);
+      text-transform: uppercase;
+    }
+
+    /* Headline */
+    .headline {
+      text-align: center;
+      margin-bottom: 15px;
+      animation: slide-up 0.8s ease 0.5s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes slide-up {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .headline h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+
+    .headline h1 span.mystery {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--neon-blue);
+      text-shadow: none;
+      filter: drop-shadow(0 0 15px var(--neon-blue));
+    }
+
+    .headline h1 span.maze {
+      display: block;
+      background: linear-gradient(135deg, #fff 0%, var(--neon-blue) 50%, var(--neon-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8));
+    }
+
+    .subtitle {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Input card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-glow);
+      padding: 40px;
+      width: min(480px, 92vw);
+      position: relative;
+      backdrop-filter: blur(20px);
+      animation: card-appear 0.8s ease 0.8s forwards;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow:
+        0 0 0 1px rgba(0, 212, 255, 0.1),
+        0 20px 60px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+
+    @keyframes card-appear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Card top accent */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-cyan), var(--neon-blue), transparent);
+      animation: scan-line 3s linear infinite;
+    }
+
+    @keyframes scan-line {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--neon-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--neon-blue);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: rgba(0, 212, 255, 0.05);
+    }
+
+    .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--neon-blue);
+      text-transform: uppercase;
+    }
+
+    .card-title span {
+      display: block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* Input field */
+    .input-group {
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .input-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-label::before {
+      content: '//';
+      color: var(--neon-orange);
+    }
+
+    .team-input {
+      width: 100%;
+      background: rgba(0, 212, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      color: var(--text-primary);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 16px;
+      padding: 14px 16px;
+      outline: none;
+      transition: all 0.3s ease;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+      letter-spacing: 2px;
+    }
+
+    .team-input::placeholder {
+      color: rgba(90, 138, 159, 0.5);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .team-input:focus {
+      border-color: var(--neon-blue);
+      background: rgba(0, 212, 255, 0.07);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), inset 0 0 10px rgba(0, 212, 255, 0.05);
+    }
+
+    /* Typing cursor effect on focus */
+    .input-cursor {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      width: 8px;
+      height: 16px;
+      background: var(--neon-blue);
+      opacity: 0;
+      transition: opacity 0.2s;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .team-input:focus~.input-cursor {
+      opacity: 1;
+    }
+
+    /* Submit button */
+    .submit-btn {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid var(--neon-blue);
+      color: var(--neon-blue);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 0;
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.4s ease;
+      z-index: 1;
+    }
+
+    .submit-btn:hover::before {
+      opacity: 1;
+    }
+
+    .submit-btn:hover::after {
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      color: #fff;
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .submit-btn span {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-arrow {
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+
+    .submit-btn:hover .btn-arrow {
+      transform: translateX(6px);
+    }
+
+    /* Error message */
+    .error-msg {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: #ff4444;
+      letter-spacing: 1px;
+      margin-top: 8px;
+      display: none;
+      padding-left: 4px;
+    }
+
+    .error-msg.show {
+      display: block;
+      animation: shake 0.3s ease;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-4px);
+      }
+
+      75% {
+        transform: translateX(4px);
+      }
+    }
+
+    /* Bottom status bar */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: rgba(0, 10, 20, 0.9);
+      border-top: 1px solid rgba(0, 212, 255, 0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 20px;
+      z-index: 50;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ff88;
+      animation: pulse-dot 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 6px #00ff88;
+      }
+
+      50% {
+        opacity: 0.4;
+        box-shadow: none;
+      }
+    }
+
+    /* ========== CLUE PAGE ========== */
+    #clue-page {
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    #clue-page.active {
+      display: flex;
+      flex-direction: column;
+      animation: page-transition 0.6s ease forwards;
+    }
+
+    @keyframes page-transition {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .clue-wrapper {
+      width: min(600px, 95vw);
+      position: relative;
+    }
+
+    .team-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+    }
+
+    .team-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .team-name-display {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--neon-blue);
+      letter-spacing: 2px;
+      filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.5));
+    }
+
+    .clue-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-glow);
+      padding: 40px;
+      position: relative;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 0 0 1px rgba(0, 212, 255, 0.08),
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      clip-path: polygon(0 0, calc(100% - 25px) 0, 100% 25px, 100% 100%, 25px 100%, 0 calc(100% - 25px));
+    }
+
+    .clue-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-orange), var(--neon-blue), var(--neon-cyan), transparent);
+    }
+
+    .clue-number {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--neon-orange);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .clue-number::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--neon-orange), transparent);
+    }
+
+    .clue-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      line-height: 1.3;
+    }
+
+    .clue-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--neon-blue);
+      margin-bottom: 24px;
+      box-shadow: 0 0 8px var(--neon-blue);
+    }
+
+    .clue-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(232, 244, 248, 0.85);
+      letter-spacing: 0.5px;
+      border-left: 2px solid rgba(0, 212, 255, 0.3);
+      padding-left: 20px;
+    }
+
+    .clue-text em {
+      color: var(--neon-cyan);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* Maze graphic */
+    .maze-graphic {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      opacity: 0.15;
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .hint-box {
+      margin-top: 30px;
+      padding: 16px 20px;
+      background: rgba(255, 107, 0, 0.05);
+      border: 1px solid rgba(255, 107, 0, 0.2);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+    }
+
+    .hint-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--neon-orange);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .hint-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px;
+      color: rgba(255, 107, 0, 0.8);
+      line-height: 1.5;
+    }
+
+    .good-luck {
+      margin-top: 30px;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 212, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .good-luck::before,
+    .good-luck::after {
+      content: '//';
+      color: var(--neon-blue);
+      font-size: 14px;
+    }
+
+    /* Animated hex pattern */
+    .hex-bg {
+      position: fixed;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.03) 0%, transparent 60%);
+      animation: rotate-hex 30s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes rotate-hex {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Loading/transition overlay */
+    .transition-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--dark-bg);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .transition-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .loading-bar-wrap {
+      width: 200px;
+      height: 2px;
+      background: rgba(0, 212, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .loading-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-cyan));
+      transition: width 0.6s ease;
+      box-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    .loading-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--neon-blue);
+      text-transform: uppercase;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+      .card {
+        padding: 28px 22px;
+      }
+
+      .clue-card {
+        padding: 28px 22px;
+      }
+
+      .team-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+    }

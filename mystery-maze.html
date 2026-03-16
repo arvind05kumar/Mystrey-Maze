@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mystery Maze — Aumento 2.0</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="mystery-maze.css">
+
+</head>
+
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop id="bg-video">
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <!-- Corners -->
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <!-- Hex background -->
+  <div class="hex-bg"></div>
+
+  <!-- Particles container -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Transition overlay -->
+  <div class="transition-overlay" id="transOverlay">
+    <div class="loading-text">INITIALIZING MAZE SEQUENCE</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar" id="loadBar"></div>
+    </div>
+  </div>
+
+  <!-- ===== LANDING PAGE ===== -->
+  <div class="page" id="landing">
+
+    <div class="logo-wrapper">
+      <img class="logo-img" src="aumento_logo.png" alt="Aumento 2.0">
+    </div>
+
+    <div class="event-badge">
+      <div class="badge-line"></div>
+      <span class="badge-text">Presents</span>
+      <div class="badge-line right"></div>
+    </div>
+
+    <div class="headline">
+      <h1>
+        <span class="mystery">Mystery</span>
+        <span class="maze">Maze</span>
+      </h1>
+      <div class="subtitle">⬡ Navigate the Unknown ⬡</div>
+    </div>
+
+    <div style="height: 28px;"></div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⬡</div>
+        <div class="card-title">
+          Team Authentication
+          <span>ENTER YOUR TEAM IDENTITY TO PROCEED</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="teamInput">Team Name</label>
+        <input type="text" id="teamInput" class="team-input" placeholder="Enter your team name..." autocomplete="off"
+          spellcheck="false" maxlength="40">
+        <div class="input-cursor"></div>
+        <div class="error-msg" id="errorMsg">[ ERROR ] Team name cannot be empty</div>
+      </div>
+
+      <button class="submit-btn" onclick="handleSubmit()">
+        <span>
+          Begin Hunt
+          <span class="btn-arrow">→</span>
+        </span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ===== CLUE PAGE ===== -->
+  <div class="page" id="clue-page">
+
+    <div class="clue-wrapper">
+
+      <div class="team-header">
+        <span class="team-tag">Active Unit:</span>
+        <span class="team-name-display" id="teamDisplay">—</span>
+      </div>
+
+      <div class="clue-card">
+        <div class="maze-graphic">⬡</div>
+
+        <div class="clue-number">Clue #01 — Mystery Maze</div>
+
+        <div class="clue-title">The First Signal</div>
+
+        <div class="clue-divider"></div>
+
+        <div class="clue-text">
+          Hidden in plain sight, yet only the <em>curious</em> find it.<br><br>
+          Where knowledge is stored but rarely retrieved,<br>
+          where silence holds centuries of secrets —<br>
+          seek the place where answers were once believed.<br><br>
+          Look beneath what towers <em>above all else</em>,<br>
+          and your next clue awaits on the third shelf.<br><br>
+        </div>
+
+        <div class="hint-box">
+          <div class="hint-label">▸ Hint Protocol</div>
+          <div class="hint-text">Think of a place where books live, and something hangs high above the entrance.</div>
+        </div>
+        <div style="text-align: center; margin-top: 25px;">
+          <span
+            style="color: var(--neon-cyan); font-weight: 400; font-size: 0.9em; letter-spacing: 2px; text-transform: uppercase;">Scan
+            the QR code at the next location.</span>
+        </div>
+      </div>
+
+      <div class="good-luck">Good Luck, Agent</div>
+
+    </div>
+
+  </div>
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span>SYS ONLINE</span>
+    <span style="color:rgba(0,212,255,0.3)">|</span>
+    <span>MYSTERY MAZE v2.0</span>
+    <span style="color:rgba(0,212,255,0.3)">|</span>
+    <span id="clock">--:--:--</span>
+  </div>
+
+  <script src="mystery-maze.js"></script>
+
+
+</body>
+
+</html>
