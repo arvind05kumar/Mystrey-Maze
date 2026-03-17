@@ -878,18 +878,82 @@
     }
 
     /* Mobile responsive */
-    @media (max-width: 480px) {
-      .card {
-        padding: 28px 22px;
+    @media (max-width: 768px) {
+      .headline h1 {
+        font-size: clamp(32px, 12vw, 48px);
       }
-
-      .clue-card {
-        padding: 28px 22px;
+      .logo-img {
+        width: min(200px, 70vw);
       }
-
+      .card, .clue-card {
+        padding: 24px 16px;
+      }
+      .clue-title {
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+      .clue-text {
+        font-size: 16px;
+        line-height: 1.6;
+        padding-left: 12px;
+        margin-bottom: 20px;
+      }
       .team-header {
         flex-direction: column;
         gap: 8px;
         align-items: flex-start;
+      }
+      .team-name-display {
+        font-size: 16px;
+      }
+      .status-bar {
+        font-size: 8px;
+        gap: 10px;
+        padding: 0 10px;
+        justify-content: center;
+      }
+      .corner-tl, .corner-tr, .corner-bl, .corner-br {
+        width: 30px;
+        height: 30px;
+      }
+      .corner-tl { top: 10px; left: 10px; }
+      .corner-tr { top: 10px; right: 10px; }
+      .corner-bl { bottom: 40px; left: 10px; }
+      .corner-br { bottom: 40px; right: 10px; }
+      
+      .maze-graphic {
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+        top: 15px;
+        right: 15px;
+      }
+      
+      .hint-text {
+        font-size: 12px;
+      }
+      
+      .submit-btn {
+        font-size: 12px;
+        padding: 12px;
+      }
+      
+      .team-input {
+        font-size: 14px;
+        padding: 12px 14px;
+      }
+    }
+    
+    @media (max-width: 380px) {
+      .headline h1 {
+        font-size: clamp(28px, 10vw, 36px);
+      }
+      .status-bar {
+        font-size: 7px;
+        gap: 6px;
+        padding: 0 6px;
+      }
+      .clue-text {
+        font-size: 15px;
       }
     }
